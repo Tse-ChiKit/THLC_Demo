@@ -25,7 +25,7 @@ contract HTLC {
 
   function fund() external {
     startTime = block.timestamp;
-    token.transferFrom(msg.sender, address(this), amount);
+    token.transferFrom(msg.sender, token, amount);
   }
 
   function withdraw(string memory _secret) external { 
@@ -35,7 +35,7 @@ contract HTLC {
   } 
 
   function refund() external { 
-    require(block.timestamp > startTime + lockTime, 'too early');
+    require(block.timestamp > startTime + lockTime, 'too early to refund');
     token.transfer(owner, amount); 
   } 
 }
